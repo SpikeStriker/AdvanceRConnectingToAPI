@@ -1,0 +1,26 @@
+Package: AdvanceRConnectingToAPI
+Type: Package
+Title: Exports a Reference Class to pull data for Sweden economy from Kolada
+Version: 1.0
+Date: 2024-10-09
+Author: Nisal Amasha Rajapaksha and Uday Jain
+Maintainer: Uday Jain <uday9k@gmail.com>
+Description: Class apiCallKolada extracts KPI data from kolada across multiple municipality and/or years. 
+Encoding: UTF-8
+License: MIT + file LICENSE
+Depends:
+    R(>= 3.0),
+    methods
+Imports: 
+    httr,
+    jsonlite,
+    tidyr,
+    dplyr
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    tinytex,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
