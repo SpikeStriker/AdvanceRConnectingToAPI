@@ -2,11 +2,7 @@
 ---
 title: "AdvanceRConnectingToAPI"
 output:
-  rmarkdown::html_vignette:
-    vignette: >
-      %\VignetteIndexEntry{koladaShiny}
-      %\VignetteEngine{knitr::rmarkdown}
-      %\VignetteEncoding{UTF-8}  
+  pdf_document: default  
 fontsize: 3pt
 ---
 
