@@ -1,19 +1,18 @@
-
 ---
 title: "AdvanceRConnectingToAPI"
-output:
-  pdf_document: default  
-fontsize: 3pt
+output: pdf_document
+fontsize: 12pt
+vignette: >
+  %\VignetteIndexEntry{AdvanceRConnectingToAPI}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  tidy = TRUE,
-  tidy.opts = list(width.cutoff = 60)  
+  comment = "#>"
 )
-
 ```
 
 ```{r setup}
@@ -46,53 +45,61 @@ The `AdvanceRConnectingToAPI` class facilitates API requests to Kolada. This cla
 
 The `AdvanceRConnectingToAPI` class can be initialized with various inputs depending on whether you want to extract data based on KPIs, municipalities, or search text.
 
-```{r}
+```{r, echo=TRUE}
 # Example: Extracting data for a specific KPI and year
-apiCall <- AdvanceRConnectingToAPI$new(kpi = list("N25026"), year = list("2020"))
+apiCall <- AdvanceRConnectingToAPI$new(kpi = list("N25026"),
+                                       year = list("2020"))
 ```
 
 If you want to perform a search using a keyword (e.g., a municipality or KPI), you can provide the search text:
 
-```{r}
+```{r, echo=TRUE}
 # Example: Searching for municipalities related to "Stockholm"
-apiCall <- AdvanceRConnectingToAPI$new(searchText = "Stockholm", searchTextIsKPI = FALSE)
+apiCall <- AdvanceRConnectingToAPI$new(searchText = "Stockholm",
+                                       searchTextIsKPI = FALSE)
 ```
 
 ### Fetching KPI Data
 
 To fetch KPI data, you need to specify the KPI code and the year(s). Optionally, you can specify the municipality:
 
-```{r}
+```{r, echo=TRUE}
 # Example: Fetch KPI data for multiple years and a specific municipality
-apiCall <- AdvanceRConnectingToAPI$new(kpi = list("N25026"), year = list("2020", "2022"))
-print(apiCall$fetchedData)
+apiCall <- AdvanceRConnectingToAPI$new(kpi = list("N25026"),
+                                       year = list("2020", "2022"))
+print(head(apiCall$fetchedData))
 ```
 
 ### Searching with Text
 
 If you're unsure of the specific KPI or municipality code, you can search using text. This is helpful for finding KPIs or municipalities by keywords.
 
-```{r}
+```{r, echo=TRUE}
 # Example: Search for KPIs related to "environment" in Swedish
-apiCall <- AdvanceRConnectingToAPI$new(searchText = "miljö", searchTextIsKPI = TRUE, sweText = TRUE)
-print(apiCall$fetchedData)
+apiCall <- AdvanceRConnectingToAPI$new(searchText = "miljö",
+                                       searchTextIsKPI = TRUE,
+                                       sweText = TRUE)
+print(head(apiCall$fetchedData))
 ```
 
-You can also perform the search in English by setting `sweText = FALSE`:
+You can also perform the search in English by setting `sweText = FALSE`. However, the text is translated to Swedish before fetching data:
 
-```{r}
+```{r, echo=TRUE}
 # Example: Search for KPIs in English
-apiCall <- AdvanceRConnectingToAPI$new(searchText = "environment", searchTextIsKPI = TRUE, sweText = FALSE)
+apiCall <- AdvanceRConnectingToAPI$new(searchText = "environment",
+                                       searchTextIsKPI = TRUE, 
+                                       sweText = FALSE)
 ```
 
 ## Summary Statistics
 
 Once data is fetched, the `summaryStatsData()` method can be used to generate summary statistics.
 
-```{r}
+```{r, echo=TRUE}
 # Example: Summary statistics for the fetched data
-fapi <- apiCall
-apiCall$summaryStatsData()
+fapi <- AdvanceRConnectingToAPI$new(kpi = list("N25026"), 
+                                    year = list("2020"))
+fapi$summaryStatsData()
 ```
 
 This method summarizes the `value` column of the fetched data, grouping by KPI, municipality, year, gender, and status.
@@ -101,9 +108,9 @@ This method summarizes the `value` column of the fetched data, grouping by KPI, 
 
 The `status` field stores the HTTP response status code, which is useful for checking whether the API request was successful.
 
-```{r}
+```{r, echo=TRUE}
 # Check the HTTP response status
-apiCall$status
+fapi$status
 ```
 
 ## Conclusion
