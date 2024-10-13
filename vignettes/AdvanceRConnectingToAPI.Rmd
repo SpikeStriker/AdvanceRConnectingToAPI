@@ -1,0 +1,118 @@
+---
+title: "AdvanceRConnectingToAPI"
+output: pdf_document
+fontsize: 12pt
+vignette: >
+  %\VignetteIndexEntry{AdvanceRConnectingToAPI}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(AdvanceRConnectingToAPI)
+```
+
+## Introduction
+
+This vignette provides a detailed guide on how to use the `AdvanceRConnectingToAPI` package. This package allows users to extract data from Kolada's API, providing access to Sweden's economic data based on KPIs, municipalities, and years. The package is flexible, enabling both KPI-specific queries and searches using text strings.
+
+## Class Overview
+
+The `AdvanceRConnectingToAPI` class facilitates API requests to Kolada. This class handles extracting data across KPIs, municipalities, and years, and allows users to fetch metadata by keyword search.
+
+### Fields
+
+- **`kpi`**: A list of KPI codes.
+- **`year`**: A list of years for data extraction.
+- **`municipality`**: A list of municipality codes.
+- **`searchText`**: A search string for either KPIs or municipalities.
+- **`searchTextIsKPI`**: A logical flag indicating if the search is for KPIs (`TRUE`) or municipalities (`FALSE`).
+- **`sweText`**: A logical flag for whether the search is in Swedish (`TRUE` by default) or English (`FALSE`).
+- **`url`**: The URL used for the API request.
+- **`fetchedData`**: A data frame containing the fetched data.
+- **`status`**: The HTTP response status code from the API request.
+
+## Basic Usage
+
+### Initialization
+
+The `AdvanceRConnectingToAPI` class can be initialized with various inputs depending on whether you want to extract data based on KPIs, municipalities, or search text.
+
+```{r, echo=TRUE}
+# Example: Extracting data for a specific KPI and year
+apiCall <- AdvanceRConnectingToAPI$new(kpi = list("N25026"),
+                                       year = list("2020"))
+```
+
+If you want to perform a search using a keyword (e.g., a municipality or KPI), you can provide the search text:
+
+```{r, echo=TRUE}
+# Example: Searching for municipalities related to "Stockholm"
+apiCall <- AdvanceRConnectingToAPI$new(searchText = "Stockholm",
+                                       searchTextIsKPI = FALSE)
+```
+
+### Fetching KPI Data
+
+To fetch KPI data, you need to specify the KPI code and the year(s). Optionally, you can specify the municipality:
+
+```{r, echo=TRUE}
+# Example: Fetch KPI data for multiple years and a specific municipality
+apiCall <- AdvanceRConnectingToAPI$new(kpi = list("N25026"),
+                                       year = list("2020", "2022"))
+print(head(apiCall$fetchedData))
+```
+
+### Searching with Text
+
+If you're unsure of the specific KPI or municipality code, you can search using text. This is helpful for finding KPIs or municipalities by keywords.
+
+```{r, echo=TRUE}
+# Example: Search for KPIs related to "environment" in Swedish
+apiCall <- AdvanceRConnectingToAPI$new(searchText = "miljö",
+                                       searchTextIsKPI = TRUE,
+                                       sweText = TRUE)
+print(head(apiCall$fetchedData))
+```
+
+You can also perform the search in English by setting `sweText = FALSE`. However, the text is translated to Swedish before fetching data:
+
+```{r, echo=TRUE}
+# Example: Search for KPIs in English
+apiCall <- AdvanceRConnectingToAPI$new(searchText = "environment",
+                                       searchTextIsKPI = TRUE, 
+                                       sweText = FALSE)
+```
+
+## Summary Statistics
+
+Once data is fetched, the `summaryStatsData()` method can be used to generate summary statistics.
+
+```{r, echo=TRUE}
+# Example: Summary statistics for the fetched data
+fapi <- AdvanceRConnectingToAPI$new(kpi = list("N25026"), 
+                                    year = list("2020"))
+fapi$summaryStatsData()
+```
+
+This method summarizes the `value` column of the fetched data, grouping by KPI, municipality, year, gender, and status.
+
+## Handling Responses
+
+The `status` field stores the HTTP response status code, which is useful for checking whether the API request was successful.
+
+```{r, echo=TRUE}
+# Check the HTTP response status
+fapi$status
+```
+
+## Conclusion
+
+The `AdvanceRConnectingToAPI` package provides a simple interface to access Sweden's economic data via the Kolada API. Whether you're extracting KPI data for specific municipalities and years or searching for data using keywords, this package streamlines the process and helps you access the data you need.
