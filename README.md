@@ -1,27 +1,30 @@
 # AdvanceRConnectingToAPI
 
-## Repository Summary
-R package or R Shiny application repository focused on statistical modelling and API integration
-with full package structure. Contains top-level folders: .github, R, man, tests, vignettes. Captures
-dependency and environment requirements for reproducibility. Existing README or documentation is
-present; this update improves the project summary and structure description.
+An R assignment demonstrating API integration with package scaffolding, documentation, and example usage.
 
-## Key Contents
-### Directories
-- `.github`
+## Repository structure
+
+Top-level folders in this repository:
+
 - `R`
 - `man`
 - `tests`
 - `vignettes`
 
-### Files
-- `.Rbuildignore`
-- `.gitignore`
-- `AdvanceRConnectingToAPI.Rproj`
-- `DESCRIPTION`
-- `LICENSE`
-- `LICENSE.md`
-- `NAMESPACE`
+## What is included
 
-## Usage
-- Build or install the R package using the `DESCRIPTION` metadata.
+### API connection
+
+- R code for external API integration.
+
+### Documentation
+
+- Package metadata, man page, and vignette examples.
+
+## How to use this repo
+
+Browse the top-level folders to explore course-specific assignments, notebooks, reports, and datasets.
+
+## How to contribute
+
+If this repository is collaborative, open issues for corrections or improvements and create pull requests with clear descriptions.
